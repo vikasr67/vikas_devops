@@ -3,10 +3,10 @@ ssdsd
 no need 
 first line
 
-
+<<<<<<< HEAD
 
 new test1 and 2
-
+=======
 testing branch stratagy.
 hello  
-
+>>>>>>> test1
