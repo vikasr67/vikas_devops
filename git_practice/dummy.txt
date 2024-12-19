@@ -14,4 +14,3 @@ merge worked, try rebase
 
 need updated on this file 
 revert 
-revert 2 
