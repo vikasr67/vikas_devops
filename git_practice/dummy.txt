@@ -10,7 +10,6 @@ new test1 and 2
 testing branch stratagy.
 HI
 the last test
-merge worked, try rebase
 
 need updated on this file 
 revert 
