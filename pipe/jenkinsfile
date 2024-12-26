@@ -1,0 +1,53 @@
+pipeline {
+    agent any  // This tells Jenkins to run the pipeline on any available agent.
+
+    environment {
+        // Define environment variables if necessary
+        MAVEN_HOME = '/opt/homebrew/opt/maven/libexec'  // Adjust the Maven path if required
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from Git repository
+                git 'https://github.com/yourusername/your-repo.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                // Run Maven to build the project
+                script {
+                    sh "${MAVEN_HOME}/bin/mvn clean install"
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Run tests (Maven will automatically run tests if configured in the `pom.xml`)
+                script {
+                    sh "${MAVEN_HOME}/bin/mvn test"
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // For simplicity, let's just echo a message to simulate deployment
+                echo 'Deploying application...'
+                // You can add your actual deployment steps here (e.g., uploading to a server)
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build and tests succeeded!'
+        }
+        failure {
+            echo 'Build or tests failed.'
+        }
+    }
+}
+
