@@ -1,6 +1,6 @@
 variable "RG_name" {
   type = string
-  default = "vikas"
+  default = "Docker"
 }
 
 variable "RG_location" {
@@ -15,7 +15,7 @@ variable "Vnet_name" {
 
 variable "VM_name" {
   type = string
-  default = "vikasbestVM"
+  default = "DockerVM"
 }
 
 variable "VM_size" {
