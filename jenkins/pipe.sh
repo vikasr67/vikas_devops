@@ -10,3 +10,4 @@ echo "pipeline is wokrking fine and its up and running"
 
 echo "webhook success"
 
+echo "offline"
