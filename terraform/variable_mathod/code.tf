@@ -35,6 +35,39 @@ resource "azurerm_public_ip" "prod" {
   allocation_method   = "Dynamic"
 }
 
+# Create a Network Security Group (NSG)
+resource "azurerm_network_security_group" "prod" {
+  name                = "prod-nsg"
+  location            = azurerm_resource_group.prod.location
+  resource_group_name = azurerm_resource_group.prod.name
+
+  # Inbound security rule for port 8080
+  security_rule {
+    name                       = "Allow-HTTP-8080"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                  = "Tcp"
+    source_port_range         = "*"
+    destination_port_range    = "8080"
+    source_address_prefix     = "*"
+    destination_address_prefix = "*"
+  }
+    # Inbound security rule for SSH (port 22)
+  security_rule {
+    name                       = "Allow-SSH"
+    priority                   = 110
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                  = "Tcp"
+    source_port_range         = "*"
+    destination_port_range    = "22"
+    source_address_prefix     = "*"
+    destination_address_prefix = "*"
+  }
+}
+
+
 
 resource "azurerm_network_interface" "prod" {
   name                = "vikasNI"
@@ -48,6 +81,14 @@ resource "azurerm_network_interface" "prod" {
     public_ip_address_id          = azurerm_public_ip.prod.id 
   }
 }
+
+
+# Associate the NSG with the Network Interface
+resource "azurerm_network_interface_security_group_association" "prod" {
+  network_interface_id      = azurerm_network_interface.prod.id
+  network_security_group_id = azurerm_network_security_group.prod.id
+}
+
 
 resource "azurerm_virtual_machine" "prod" {
   name = var.VM_name
